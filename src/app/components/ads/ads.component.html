@@ -1,0 +1,43 @@
+@if (product) {
+    <div class="row" style="margin: 40px auto;">
+      <div class="col">
+        <div
+          class="card"
+          CardStyle
+          defaultShadow="7px 5px 5px #dfdfdf"
+          secondaryShadow="10px 5px 5px #b5b5b5"
+          style="width: 18rem"
+        >
+          <img class="card-img-top" [src]="product.img" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <div class="card-text">
+              <h5>Quantity: {{ product.quantity }}</h5>
+    
+              @switch (product.quantity) { @case (0) {
+              <h5 class="text text-danger">Out of stock</h5>
+              } @case (1) {
+              <h5 class="text text-warning">Last one</h5>
+              } @case (2) {
+              <h5 class="text text-warning">Last two</h5>
+              } @default {
+              <h5 class="text text-success">In stock</h5>
+              } } @if (product.purshasedDate) {
+              <p class="text text-secondary">
+                Bought At: {{ product.purshasedDate | date : "short" }}
+              </p>
+              }
+            </div>
+            <div class="d-flex justify-space-between">
+              <h5 class="text text-info" style="padding: 0 7px">
+                {{ product.price | currency : "USD" : "symbol" : "0.0-0" }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div>
+    </div>
+    }

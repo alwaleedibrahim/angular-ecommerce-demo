@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 p-3 text text-warning">
+      <h1>Hello, {{ clientName }}</h1>
+      <h2 class="text text-muted">
+        Credit card number: {{ "5204075457569221" | creditcard }}
+      </h2>
+    </div>
+    <div class="card col-md-10">
+      @if (!isPurshased) {
+
+      <h5 class="card-header">Store</h5>
+      <div class="card-body">
+        <div style="display: flex; align-items: center">
+          <img
+            [src]="store1.logo"
+            class="card-img-top"
+            alt="..."
+            style="width: 100px; border-radius: 50%; margin-right: 20px"
+          />
+          <h5 class="card-title">{{ store1.name }}</h5>
+        </div>
+        <p class="card-text"></p>
+        <h6>Branches</h6>
+        <ul>
+          @for (b of store1.branches; track b) {
+          <li>{{ b }}</li>
+          }
+        </ul>
+        <!-- <h3 *ngIf="discount">We offer a discount of {{discount}}%</h3> -->
+        @if (discount) {
+        <h3 style="color: darkturquoise">
+          ✨ We offer a discount of {{ discount }}% ✨
+        </h3>
+        }
+        <button class="btn btn-primary" (click)="isPurshased = !isPurshased">
+          Buy Now !
+        </button>
+      </div>
+      } @else if (isPurshased) {
+      <div>
+        <h3 class="text text-info">
+          ✨ Thanks for purchasing from our Store,
+          <span class="text text-primary">{{ clientName }} </span> ✨
+        </h3>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-md-4">
+      <label for="cat">Select Category: {{ categoryFilter }}</label>
+      <select class="form-control" id="cat" [(ngModel)]="categoryFilter">
+        <option value="all" selected>Show all</option>
+        <option value="mobile">Mobile Phones</option>
+        @for (cat of categoryList; track cat.id) {
+        <option [value]="cat.id">{{ cat.name }}</option>
+        }
+      </select>
+      <div style="display: flex; flex-direction: column; margin: 15px 0">
+        <h3>Filter By Price</h3>
+        <label for="max-price-filter">Min</label>
+        <input
+          type="number"
+          id="max-price-filter"
+          [(ngModel)]="minPriceFilter"
+          class="form-control"
+        />
+        <label for="max-price-filter">Max</label>
+        <input
+          type="number"
+          id="max-price-filter"
+          [(ngModel)]="maxPriceFilter"
+          class="form-control"
+        />
+      </div>
+    </div>
+  </div>
+  <app-products
+    [_categoryFilter]="categoryFilter"
+    [_minPriceFilter]="minPriceFilter"
+    [_maxPriceFilter]="maxPriceFilter"
+    (addedProductToCart)="addToCart($event)"
+  ></app-products>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </thead>
+        <tbody>
+        @for (product of cart; track product.id) {
+          <tr>
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price |  currency : "USD" : "symbol" : "0.0-0"}} </td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.quantity * product.price |  currency : "USD" : "symbol" : "0.0-0"}}</td>
+          </tr>
+        }
+      </tbody>
+      <tfoot class="table-dark bg-secondary">
+        <td colspan="4">Total</td>
+        <td>{{cartTotal |  currency : "USD" : "symbol" : "0.0-0"}}</td>
+      </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
