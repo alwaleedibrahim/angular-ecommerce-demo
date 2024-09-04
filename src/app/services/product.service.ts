@@ -109,7 +109,7 @@ export class ProductService {
     return this.getAll().find(p => p.id == productID)
   }
 
-  getProductsIDs(): number[] {
+  getProductsIDs(): (number | string)[] {
     return this.productList.map(p=> p.id)
   }
 
@@ -129,7 +129,7 @@ export class ProductService {
     return filtered;
   }
 
-  buy(id: number) {
+  buy(id: number | string) {
     const product: IProduct | undefined = this
       .getAll()
       .find((p) => p.id == id);

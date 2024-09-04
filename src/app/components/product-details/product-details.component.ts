@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IProduct } from '../../models/iproduct';
 import { CommonModule } from '@angular/common';
+import { ProductApiService } from '../../services/product-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -11,25 +13,37 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
 })
-export class ProductDetailsComponent implements OnInit {
-  productId: number = 0;
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  productId: number | string = 0;
   product: IProduct | undefined = undefined;
-  productsIDs: number[] = [];
+  productsIDs: (number | string)[] = [];
   productIndex: number = 0;
+  sub1!: Subscription;
+  sub2!: Subscription;
   constructor(
     private productService: ProductService,
+    private productApiService: ProductApiService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.productApiService.getAll().subscribe((data)=> {
+      this.productsIDs = data.map(p => p.id)
+      this.productIndex = this.productsIDs.indexOf(this.productId)
+    })
+  }
+  
   ngOnInit(): void {
-    this.productsIDs = this.productService.getProductsIDs();
-    console.log(this.productsIDs);
-    this.activatedRoute.paramMap.subscribe((params) => {
-      this.productId = Number(params.get('id')) || 0;
-      this.product = this.productService.getProductByID(this.productId);
-      if (!this.product) {
-        this.router.navigate(['**']);
-      }
+    this.sub1 = this.activatedRoute.paramMap.subscribe((params) => {
+      this.productId = params.get('id') || 0;
+      this.sub2= this.productApiService.getProductByID(this.productId).subscribe({
+        next: (data) => {
+          this.product = data;
+        },
+        error: (err) => {
+           console.log(this.productId)
+          this.router.navigate(['**']);
+        },
+      });
     });
   }
 
@@ -41,5 +55,12 @@ export class ProductDetailsComponent implements OnInit {
   nextProduct() {
     this.productIndex = this.productsIDs.indexOf(this.productId) + 1;
     this.router.navigate(['/product', this.productsIDs[this.productIndex]]);
+  }
+
+
+  ngOnDestroy(): void {
+
+    this.sub1.unsubscribe()
+    this.sub2.unsubscribe()
   }
 }

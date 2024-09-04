@@ -53,11 +53,13 @@
             >The product images have props used for illustrative purposes.</b
           ><br /><br /><b> Dining Chairs sold separately. </b>
         </p>
+        <button class="btn btn-warning" [routerLink]='["/admin", "product", product.id]'>edit this product</button>
+
       </div>
     </div>
     <div>
       <button class="btn btn-primary m-2" (click)="prevProduct()" [disabled]="productIndex -1 < 0">Prev</button>
-      <button class="btn btn-primary m-2" (click)="nextProduct()" [disabled]="productIndex +1 >= productsIDs.length">Next</button>
+      <button class="btn btn-primary m-2" (click)="nextProduct()" [disabled]="productIndex + 1 >= productsIDs.length">Next</button>
     </div>
   </div>
 </div>

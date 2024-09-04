@@ -1,0 +1,76 @@
+<form class="col-6 my-5" [formGroup]="signupForm" (submit)="handleSignup()">
+  <h2>Sign Up</h2>
+  <label for="name">Full Name</label>
+  <input
+    id="name"
+    name="name"
+    class="form-control"
+    type="text"
+    formControlName="name"
+    [ngClass]="{ 'is-invalid': isInvalid('name') }"
+  />
+  @if (isInvalid('name')) {
+  <div class="text text-danger">
+    @if (signupForm.get('name')?.errors?.['required']) { Full name is required }
+    @else if (signupForm.get('name')?.errors?.['minlength']) { Full name must
+    contain at least 5 letters }
+  </div>
+  }
+  <label for="email">Email</label>
+  <input
+    id="email"
+    name="email"
+    class="form-control"
+    type="email"
+    formControlName="email"
+    [ngClass]="{ 'is-invalid': isInvalid('email') }"
+  />
+  @if (isInvalid('email')){
+  <div class="text text-danger">
+    @if (signupForm.get('email')?.errors?.['required']) { Email is required }
+    @else if (signupForm.get('email')?.errors?.['email']) { Invalid email }
+  </div>
+  }
+  <div formArrayName="phones">
+    <label for="phone">Phone Number</label>
+    @for (phone of phones.controls; track $index) {
+    <input
+      id="phone"
+      name="phone"
+      class="form-control"
+      type="text"
+      [formControlName]="$index"
+      [ngClass]="{
+        'is-invalid': (phone.dirty || phone.touched) && phone.invalid
+      }"
+    />
+
+    @if ((phone.dirty || phone.touched) && phone.invalid){
+    <div class="text text-danger">
+      @if (phone.errors?.['required']) { Phone number is
+      required } @else if (phone.errors?.['pattern']) { Phone
+      Number must be in form of 01xx xxx xxxx }
+    </div>
+    <button class="btn btn-danger" (click)="removePhone($index)">remove</button>
+
+    } }
+    <button class="btn btn-primary" (click)="addPhone()">Add phone</button>
+  </div>
+  <label for="password">Password</label>
+  <input
+    id="password"
+    name="password"
+    class="form-control"
+    type="password"
+    formControlName="password"
+    [ngClass]="{ 'is-invalid': isInvalid('password') }"
+  />
+  @if (isInvalid('password')){
+  <div class="text text-danger">
+    @if (signupForm.get('password')?.errors?.['required']) { Password is
+    required } @else if (signupForm.get('password')?.errors?.['minlength']) {
+    Password must contain at least 5 letters }
+  </div>
+  }
+  <button class="btn btn-primary my-2" type="submit">Submit</button>
+</form>

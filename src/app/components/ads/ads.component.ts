@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { IProduct } from '../../models/iproduct';
-import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { ProductApiService } from '../../services/product-api.service';
 
 @Component({
   selector: 'app-ads',
@@ -23,15 +23,19 @@ export class AdsComponent implements OnInit, OnDestroy {
         i = 0
       }
     }, 2000);
+    
     return function unsubscribe() {
       clearInterval(intervalId);
       console.log("Unsubscribed")
     };
   });
   subscription!: Subscription;
+  productServiceSubscription!: Subscription; 
 
-  constructor(private productService: ProductService) {
-    this.products = this.productService.getAll();
+  constructor(private productApiService:ProductApiService) {
+    this.productServiceSubscription= this.productApiService.getAll().subscribe(data=>{
+      this.products = data
+    });
   }
 
   ngOnInit(): void {
@@ -44,5 +48,6 @@ export class AdsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.productServiceSubscription.unsubscribe()
   }
 }

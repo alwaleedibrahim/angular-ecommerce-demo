@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { IProduct } from '../../models/iproduct';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { CategoryApiService } from '../../services/category-api.service';
 
 @Component({
   selector: 'app-home',
@@ -21,13 +22,13 @@ export class HomeComponent {
   clientName: string;
   isPurshased: boolean = false;
   discount: Discount;
-  categoryList: ICategory[];
+  categoryList: ICategory[] = [];
   cart: IProduct[];
   cartTotal : number;
   categoryFilter: string ='';
   maxPriceFilter: number = 999999999
   minPriceFilter: number = 0
-  constructor(private productService : ProductService) {
+  constructor(private productService : ProductService, private categoryApiService : CategoryApiService) {
     this.store1 = new Store(
       'Noon',
       ['Cairo', 'Alexanderia', 'Giza'],
@@ -35,20 +36,11 @@ export class HomeComponent {
     );
     this.clientName = 'Alwaleed';
     this.discount = Discount.d_10
-    this.categoryList = [
-      {
-        id: 1,
-        name: 'Table',
-      },
-      {
-        id: 2,
-        name: 'Chair',
-      },
-      {
-        id: 3,
-        name: 'TV Unit',
-      },
-    ];
+    categoryApiService.getAll().subscribe({
+      next: (data) => {
+        this.categoryList=data
+      }
+    })
     this.cart = this.productService.getCart()
     this.cartTotal = this.productService.getCartTotal()
   }

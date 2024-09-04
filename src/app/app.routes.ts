@@ -6,6 +6,10 @@ import { AboutComponent } from './components/about/about.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AdsComponent } from './components/ads/ads.component';
+import { NewProductComponent } from './components/new-product/new-product.component';
+import { authGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 export const routes: Routes = [
   {
@@ -29,9 +33,22 @@ export const routes: Routes = [
     title: "About Us"
   },
   {
+    path: "admin/product",
+    component:NewProductComponent,
+    title: "New Product",
+    canActivate: [authGuard]
+  },
+  {
+    path: "admin/product/:id",
+    component:NewProductComponent,
+    title: "Edit Product",
+    canActivate: [authGuard]
+  },
+  {
     path: "product/:id",
     component:ProductDetailsComponent,
-    title: "Product Details"
+    title: "Product Details",
+    canActivate: [authGuard]
   },
   {
     path: "product",
@@ -42,6 +59,16 @@ export const routes: Routes = [
     path: "ads",
     component:AdsComponent,
     title: "Ads"
+  },
+  {
+    path: "login",
+    component:LoginComponent,
+    title: "Login to continue"
+  },
+  {
+    path: "signup",
+    component:SignupComponent,
+    title: "Create new user account"
   },
   {
     path: '**',

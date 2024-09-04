@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "1",
-      "name": "Odense 8-Seater Top Dining Table updated",
+      "name": "Odense 8-Seater Top Dining Table",
       "price": 21500,
       "quantity": 0,
       "img": "https://media.homecentre.com/i/homecentre/163650487-163650487-HC18082021_01-2100.jpg?fmt=auto&$quality-standard$&sm=c&$prodimg-d-sqr-pdp$",
@@ -71,38 +71,13 @@
       "quantity": 3,
       "img": "https://media.homecentre.com/i/homecentre/163688823-163688823-HC05102021_01-2100.jpg?fmt=auto&$quality-standard$&sm=c&$prodimg-d-sqr-pdp$",
       "categoryID": 3
-    },
-    {
-      "id": "0c2d"
-    },
-    {
-      "id": "f66e"
-    },
-    {
-      "id": "2a2f"
-    },
-    {
-      "id": "c125"
-    },
-    {
-      "id": "e9ef",
-      "name": "Vostro 3510",
-      "price": 40000,
-      "quantity": 5,
-      "categoryID": 2,
-      "img": "https://m.media-amazon.com/images/I/515voA3Bv5L.__AC_SX300_SY300_QL70_ML2_.jpg"
     }
   ],
   "stores": [
     {
       "name": "Noon",
-      "branches": [
-        "Cairo",
-        "Alexanderia",
-        "Giza"
-      ],
-      "logo": "noon.png",
-      "id": "912a"
+      "branches": ["Cairo", "Alexanderia", "Giza"],
+      "logo": "noon.png"
     }
   ],
   "categories": [
@@ -119,77 +94,7 @@
       "name": "TV Unit"
     }
   ],
-  "cart": [],
-  "users": [
-    {
-      "id": "b778",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "13212312312",
-      "phones": [
-        ""
-      ]
-    },
-    {
-      "id": "4a60",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "13212312312",
-      "phones": [
-        "01144872943"
-      ]
-    },
-    {
-      "id": "819d",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "13212312312",
-      "phones": [
-        "01144872943",
-        ""
-      ]
-    },
-    {
-      "id": "1b51",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "13212312312",
-      "phones": [
-        "01144872943",
-        "01001110000",
-        ""
-      ]
-    },
-    {
-      "id": "f3f6",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "13212312312",
-      "phones": [
-        "01144872943",
-        "01001110000",
-        "01000000000",
-        ""
-      ]
-    },
-    {
-      "id": "795d",
-      "name": "testaaa",
-      "email": "a@a.com",
-      "password": "aaaaaa",
-      "phones": [
-        "01144872943",
-        "01001110000",
-        "01000000000",
-        ""
-      ]
-    },
-    {
-      "id": "bcd4",
-      "name": "aaaaa",
-      "email": "b@b",
-      "password": "bbbbbb",
-      "phones": []
-    }
+  "cart": [
+    
   ]
 }

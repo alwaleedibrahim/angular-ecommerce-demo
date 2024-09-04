@@ -1,0 +1,74 @@
+<form (ngSubmit)="handleSubmission()" class="col-6" #createProductForm="ngForm">
+  <label>Name</label>
+  <input
+    type="text"
+    name="name"
+    class="form-control"
+    [(ngModel)]="product.name"
+    required="true"
+  />
+  <label>Price</label>
+  <input
+    type="number"
+    name="price"
+    class="form-control"
+    [(ngModel)]="product.price"
+    required="true"
+    min="1"
+  />
+  <label>Quantity</label>
+  <input
+    type="number"
+    name="quantity"
+    class="form-control"
+    [(ngModel)]="product.quantity"
+    required="true"
+    min="0"
+  />
+  <label>Image URL</label>
+  <input
+    type="text"
+    name="img"
+    class="form-control"
+    [(ngModel)]="product.img"
+  />
+  <label>Category</label>
+  <select
+    name="categoryID"
+    class="form-control"
+    [(ngModel)]="product.categoryID"
+    required="true"
+  >
+    @for (category of categoryList; track category.id) {
+    <option [value]="category.id">{{ category.name }}</option>
+    }
+  </select>
+  @if (productId) {
+  <button
+    class="btn btn-warning mt-3"
+    type="submit"
+    [disabled]="createProductForm.invalid"
+  >
+    Update
+  </button>
+  } @else {
+  <button
+    class="btn btn-primary mt-3"
+    type="submit"
+    [disabled]="createProductForm.invalid"
+  >
+    Create
+  </button>
+  }
+</form>
+@if (productId) {
+<button class="btn btn-danger mt-3" (click)="showDelConfirm = true">
+  Delete
+</button>
+@if (showDelConfirm) {
+<p class="text text-danger">Are you sure you want to delete this product?</p>
+<button class="btn btn-secondary mt-3" (click)="showDelConfirm = false">
+  Cancel
+</button>
+<button class="btn btn-danger mt-3" (click)="deleteProduct()">Delete</button>
+} }
